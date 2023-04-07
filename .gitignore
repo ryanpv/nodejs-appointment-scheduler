@@ -1,0 +1,4 @@
+.env
+node_modules
+firebase/firebaseAdmin/firebaseServiceAccount.js
+firebase/firebaseClient/firebaseConfig.js

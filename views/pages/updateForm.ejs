@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head.ejs') %>
+</head>
+<body class="container">
+  <header>
+    <%- include('../partials/header.ejs') %>
+  </header>
+
+  <form action="<%=`/update-appointment/${ data._id }` %>" method="POST">
+    <div class="form-group" id="adminAuth" style="display: none;">
+      <label for="formControlEmailInput">Email address</label>
+      <input name="client" type="email" value="<%= data.client %>" class="form-control" id="formControlEmailInput" placeholder="name@example.com">
+    </div>
+    <div class="form-group">
+      <label for="dateInput">Date</label>
+      <input name="date" type="date" value="<%= data.date %>" class="form-control" id="dateInput">
+    </div>
+    <div class="form-group">
+      <label for="timeInput">Time</label>
+      <input name="time" type="time" value="<%= data.time %>" class="form-control" id="timeInput" min="10:00" max="19:00" step="30">
+    </div>
+    <div class="form-group">
+      <label for="formControlSelect">Select service</label>
+      <select selected="<%= data.service %>" name="service" class="form-control" id="formControlSelect">
+        <option>Service1</option>
+        <option>Service2</option>
+        <option>Service3</option>
+        <option>Service4</option>
+        <option>Service5</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="formControlTextInput">Provide any specific details</label>
+      <textarea name="details" class="form-control" id="formControlTextInput" rows="3" maxlength="500"><%= data.details %></textarea>
+    </div> 
+    <br></br>
+
+    <input type="submit" value="Submit">
+    <input type="reset">
+  </form>
+  
+</body>
+  <script>
+    console.log('script section reached');
+    const cookies = document.cookie;
+    const show = (selector) => {
+      const query = document.querySelectorAll(selector);
+      for (let i = 0; i < query.length; i++) {
+        query[i].style.display = 'block';
+      };
+    };
+
+    if (cookies.split("; ").includes("currentUser=admin@email.com")) {
+      console.log('reached update form');
+      show('#adminAuth');
+    }
+  </script>
+</html>

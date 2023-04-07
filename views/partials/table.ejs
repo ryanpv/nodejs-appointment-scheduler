@@ -1,0 +1,20 @@
+<% typeof tableData !== 'undefined' && tableData.forEach((tableItem) => { %>
+  <tr>
+    <td><%= tableItem.client %></td>
+    <td><%= tableItem.service %></td>
+    <td><%= tableItem.date %> @<%= tableItem.time %></td>
+    <td><%= tableItem.details %></td>
+    <td>
+      <form action="/admin-cancel" method="POST">
+        <button name="_id" class="btn btn-danger btn-sm" type="submit" value=<%= tableItem._id %>>del</button>
+      </form>
+    </td>
+    <td>
+      <form action=<%= `/update-form/${ tableItem._id }` %> method="GET">
+        <button class="btn btn-secondary btn-sm" role="button" value=<%= tableItem._id %>>update</button>
+      </form>
+    </td>
+
+  </tr>
+<% }); %>
+

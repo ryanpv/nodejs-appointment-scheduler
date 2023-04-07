@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head.ejs') %>
+</head>
+<body class="container">
+  <header>
+    <%- include('../partials/header.ejs') %>
+  </header>
+
+  <form action="/get-daily-appointments" method="GET">
+    <div class="form-group">
+      <label for="dateInput">Date</label>
+      <input required name="date" type="date" class="form-control mb-2" id="dateInput">
+      <button class="btn btn-secondary btn-sm" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <h1>All appointments</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Service</th>
+        <th>Schedule</th>
+        <th>Details</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- include('../partials/table.ejs') %>
+    </tbody>
+  </table>
+</body>
+</html>

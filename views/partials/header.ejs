@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light rounded-1 mb-3">
+  <a class="navbar-brand" href="/">NodeJS Emailer</a>
+  <!-- <ul class="navbar-nav mr-auto"> -->
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <li class="nav-item">
+      <form method="GET">
+        <a class="nav-link" role="button" type="submit" value="2" href="/booking-form">Booking</a>
+      </form>
+    </li>
+    <div class="admin authorized" style="display: none;">
+      <li class="nav-item">
+        <form method="GET">
+          <a class="nav-link" role="button" type="submit" value="2" href="/admin-get-appointments">Admin</a>
+        </form>
+      </li>  
+    </div>
+    <div class="user authorized" style="display: none;">
+      <li class="nav-item">
+        <form method="GET">
+          <a class="nav-link content authorized" role="button" type="submit" value="2" href="/user-appointments">Appointments</a>
+        </form>
+      </li>  
+    </div>
+  </ul>
+  
+  <div class="content unauthorized" style="">
+    <form method="GET">
+      <a class="nav-link" role="button" type="submit" href="/login-page">Login</a>
+    </form>
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <div class="content unauthorized" style="">
+    <form>
+      <a class="nav-link" role="button" type="submit" href="/signup-page">Sign Up</a>
+    </form>
+  </div>
+  &nbsp;&nbsp;&nbsp;
+  <div class="content authorized" style="display: none;">
+    <form>
+      <a class="nav-link" role="button" type="submit" href="/logout">Log Out</a>
+    </form>
+  </div>
+  &nbsp;
+</nav>
+<script >
+  const cookies = document.cookie;
+
+  const show = (selector) => {
+    const query = document.querySelectorAll(selector);
+    for (let i = 0; i < query.length; i++) {
+      query[i].style.display = 'block';
+    };
+  };
+
+  const hide = (selector) => {
+    const query = document.querySelectorAll(selector)
+    for (let i = 0; i < query.length; i++) {
+      query[i].style.display = 'none';
+    };
+  };
+
+  if (!cookies.split("; ").includes("currentUser=null")) {
+    console.log('current user ejs: ', cookies);
+    hide('.content.unauthorized')
+    show('.content.authorized')
+  }
+
+  if (cookies.split("; ").includes("currentUser=admin@email.com")) {
+    show('.admin.authorized');
+  } else if (!cookies.split("; ").includes("currentUser=null") && !cookies.split("; ").includes("currentUser=admin@email.com")) {
+    show('.user.authorized')
+  }
+</script> 

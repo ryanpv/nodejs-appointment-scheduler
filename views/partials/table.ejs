@@ -5,7 +5,7 @@
     <td><%= tableItem.date %> @<%= tableItem.time %></td>
     <td><%= tableItem.details %></td>
     <td>
-      <form action="/admin-cancel" method="POST">
+      <form action="/cancel-request" method="POST">
         <button name="_id" class="btn btn-danger btn-sm" type="submit" value=<%= tableItem._id %>>del</button>
       </form>
     </td>

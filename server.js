@@ -1,11 +1,9 @@
 import express from 'express';
-import path from 'path';
 import 'dotenv/config.js';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { appAdmin } from './firebase/firebaseAdmin/firebaseAdminConfig.js';
 
-import { fileURLToPath } from 'url';
 import { mongooseConn, Appointment } from './db/dbConn.js';
 import { addAppointment } from './controllers/postHandler.js';
 import { clientCancel } from './controllers/clientCancel.js';
@@ -22,14 +20,11 @@ import { verifyFirebaseToken } from './middleware/verifyUser.js';
 
 const PORT = 3000;
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const store = new session.MemoryStore();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-// app.use('/css', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'css')));
 app.use(session({
   secret: 'qwertyasdf',
   saveUninitialized: false,
@@ -45,7 +40,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => { // Renders homepage
   const date = new Date(2000, 2, 22, 4, 30).toString()
   const dateParse = Date.parse('2000-03-22T09:30:00.000Z')
-console.log('session: ', req.session);
+// console.log('session: ', req.session);
 console.log('cookies: ', req.cookies);
 console.log('homepage - session ID: ', req.sessionID);
 console.log('homepage cookies user: ', req.cookies.currentUser);
@@ -125,17 +120,21 @@ app.get("/appointment/:id", async (req, res) => { // GET specific appointment us
 
 app.post("/add-appointment", addAppointment) // POST new appointment
 
-app.post("/update-appointment/:id", verifyFirebaseToken, updateHandler); // UPDATE appointment
+app.post("/update-appointment/:id", verifyFirebaseToken, updateHandler); // UPDATE appointment through FORM
 
-app.post("/cancel-appointment", verifyFirebaseToken, clientCancel); // DELETE appointment by CLIENT
+app.post("/cancel-appointment", verifyFirebaseToken, clientCancel); // DELETE appointment through FORM
 
+app.post("/cancel-request", verifyFirebaseToken, adminCancel); // DELETE appointment 
 ////////////////////// ADMIN ROUTES ////////////////////
 // all admin routes need middleware to confirm that admin is accessing
-app.get("/admin-get-appointments", verifyFirebaseToken, adminGetAll); // GET ALL appointments - ADMIN ROUTE
 
-app.get("/get-daily-appointments", verifyFirebaseToken, getDailyAppointments) // Filter appointments for each day
+import adminRouter from "./routes/adminRoutes.js";
+app.use("/admin", adminRouter);
 
-app.post("/admin-cancel", verifyFirebaseToken, adminCancel); // DELETE appointment by ADMIN
+// app.get("/admin-get-appointments", verifyFirebaseToken, adminGetAll); // GET ALL appointments - ADMIN ROUTE
+
+// app.get("/get-daily-appointments", verifyFirebaseToken, getDailyAppointments) // Filter appointments for each day
+
 
 
 

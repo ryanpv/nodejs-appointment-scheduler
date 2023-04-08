@@ -9,8 +9,8 @@ export const verifyFirebaseToken = async (req, res, next) => { // middleware to 
       req.user = decodeFirebaseToken
 
       if (req.session.authenticated && req.session.userId === decodeFirebaseToken.uid) {
-        console.log('middleware session user: ', req.session.userId);
-        console.log('middleware decodedtoken: ', decodeFirebaseToken);
+        // console.log('middleware session user: ', req.session.userId);
+        // console.log('middleware decodedtoken: ', decodeFirebaseToken);
         return next();
       } else { // ELSE statement to send user to login page 
         res.send(`<p>User unverified, please try again</p><a href='/login-page'>back to LOGIN</a>`)

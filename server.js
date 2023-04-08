@@ -8,9 +8,7 @@ import { mongooseConn, Appointment } from './db/dbConn.js';
 import { addAppointment } from './controllers/postHandler.js';
 import { clientCancel } from './controllers/clientCancel.js';
 import { updateHandler } from './controllers/updateHandler.js';
-import { adminGetAll } from './controllers/admin/getAllHandler.js';
 import { adminCancel } from './controllers/admin/adminCancel.js';
-import { getDailyAppointments } from './controllers/admin/getDailyHandler.js';
 import { signupRequest } from './controllers/signupHandler.js';
 import { loginHandler } from './controllers/loginHandler.js';
 import { updateFormHandler } from './controllers/updateFormHandler.js';
@@ -71,11 +69,11 @@ app.get('/appointment-list', verifyFirebaseToken, async (req, res) => { //
   res.render('pages/appointmentList.ejs')
 });
 
-app.get('/signup-page', (req, res) => {
+app.get('/signup-page', (req, res) => { // Render sign up form
   res.render('pages/signUpPage.ejs')
 });
 
-app.get('/login-page', (req, res) => {
+app.get('/login-page', (req, res) => { // Render log in page
   if (req.session.authenticated) {
     console.log('user logged in');
   } else {
@@ -84,7 +82,7 @@ app.get('/login-page', (req, res) => {
   res.render('pages/loginPage.ejs')
 });
 
-app.get('/logout', (req, res) => {
+app.get('/logout', (req, res) => { // Logout function route
   req.session.destroy();
   res.cookie('currentUser', 'null', { httpOnly: false });
   res.cookie('userId', 'null', { httpOnly: true });
@@ -94,9 +92,9 @@ app.get('/logout', (req, res) => {
   res.send(`<p>LOGGED OUT!</p><a href='/'>back to home</a>`);
 })
 
-app.post('/signup-request', signupRequest);
+app.post('/signup-request', signupRequest); // Sign up request through firebase-admin SDK
 
-app.post('/login-request', loginHandler);
+app.post('/login-request', loginHandler); // Log in route - begins session
 
 app.post('/sign-up-success', (req, res) => {
   console.log(req.body);

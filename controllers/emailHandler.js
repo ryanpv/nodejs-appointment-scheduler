@@ -26,7 +26,7 @@ export const emailResponse = async (req, res, emailType) => {
       res.send({ message: "Email request has been rejected" })
     } else {
       console.log("message ID", info.messageId);
-      res.send('email sent!')
+      res.send(`<p>EMAIL SENT!</p><a href='/'>back to home</a>`)
     };
 
   } catch (err) {

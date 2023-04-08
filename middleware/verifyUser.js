@@ -8,6 +8,7 @@ export const verifyFirebaseToken = async (req, res, next) => { // middleware to 
       const decodeFirebaseToken = await getAuth().verifyIdToken(req.session.access_token)
       req.user = decodeFirebaseToken
 
+      // checks for session existence and if session stored user === user that sent access token
       if (req.session.authenticated && req.session.userId === decodeFirebaseToken.uid) {
         // console.log('middleware session user: ', req.session.userId);
         // console.log('middleware decodedtoken: ', decodeFirebaseToken);

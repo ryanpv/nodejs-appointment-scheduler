@@ -41,7 +41,7 @@ app.get('/', checkUser, (req, res) => { // Renders homepage
 // console.log('session: ', req.session);
 console.log('cookies: ', req.cookies.userType);
 console.log('homepage - session ID: ', req.sessionID);
-console.log('homepage cookies user: ', req.cookies.currentUser);
+// console.log('homepage cookies user: ', req.cookies.currentUser);
 // console.log('verified user: ', req.user);
 // if (req.session.authenticated && req.session.userId === req.user.userId) {
 //   console.log('user fully verified');
@@ -133,7 +133,7 @@ app.post("/cancel-request", verifyFirebaseToken, adminCancel); // DELETE appoint
 ////////////////////// ADMIN ROUTES ////////////////////
 // all admin routes need middleware to confirm that admin is accessing
 
-import adminRouter from "./routes/adminRoutes.js";
+import adminRouter from "./routers/adminRoutes.js";
 app.use("/admin", adminRouter);
 
 // app.get("/admin-get-appointments", verifyFirebaseToken, adminGetAll); // GET ALL appointments - ADMIN ROUTE

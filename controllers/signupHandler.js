@@ -7,8 +7,11 @@ export const signupRequest = async (req, res) => {
         email: req.body.signupEmail,
         password: req.body.password
       });
+      console.log('user uid: ', createUser.uid);
 
-      console.log('new user: ', createUser);
+    const addUserRole = await getAuth()
+      .setCustomUserClaims(createUser.uid, { endUser: true });
+
       res.send(`<p>SUCCESS</p> <a href='/login-page'>Go to LOGIN</a>`);
   } catch (err) {
     console.log(err);

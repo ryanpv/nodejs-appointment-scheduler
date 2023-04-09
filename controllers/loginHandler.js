@@ -19,6 +19,7 @@ export const loginHandler = async (req, res) => {
     req.session.user = userEmail;
     req.session.userId = userUid;
     req.session.access_token = access_token
+    // console.log('logged user: ', userLoginRequest);
 
     res.cookie('currentUser', userEmail, { httpOnly: false, encode: String });
     res.cookie('userId', userUid, { httpOnly: true });

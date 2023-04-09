@@ -68,9 +68,9 @@
     show('.content.authorized')
   }
 
-  if (cookies.split("; ").includes("currentUser=admin@email.com")) {
+  if (cookies.split("; ").includes("userType=admin")) {
     show('.admin.authorized');
-  } else if (!cookies.split("; ").includes("currentUser=null") && !cookies.split("; ").includes("currentUser=admin@email.com")) {
+  } else if (!cookies.split("; ").includes("currentUser=null") && !cookies.split("; ").includes("userType=admin")) {
     show('.user.authorized')
   }
 </script> 

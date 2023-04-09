@@ -3,6 +3,8 @@ import { Appointment } from "../db/dbConn.js";
 export const clientAppointments = async (req, res) => { // GET specific appointment using _id
   try {
     const appointments = await Appointment.find({ client: req.session.user }).exec();
+    console.log('isEndUser?: ', req.user.endUser);
+    console.log('isAdmin?: ', req.user.admin);
 
     res.render('pages/appointmentList.ejs', {
       tableData: appointments

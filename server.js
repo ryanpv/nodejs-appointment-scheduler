@@ -13,7 +13,7 @@ import { signupRequest } from './controllers/signupHandler.js';
 import { loginHandler } from './controllers/loginHandler.js';
 import { updateFormHandler } from './controllers/updateFormHandler.js';
 import { clientAppointments } from './controllers/clientAppointments.js';
-import { verifyFirebaseToken } from './middleware/verifyUser.js';
+import { checkUser, verifyFirebaseToken } from './middleware/verifyUser.js';
 
 
 const PORT = 3000;
@@ -35,7 +35,7 @@ app.set('view engine', 'ejs');
 
 /////////// RENDER ROUTES /////////// 
 
-app.get('/', (req, res) => { // Renders homepage
+app.get('/', checkUser, (req, res) => { // Renders homepage
   const date = new Date(2000, 2, 22, 4, 30).toString()
   const dateParse = Date.parse('2000-03-22T09:30:00.000Z')
 // console.log('session: ', req.session);
@@ -64,10 +64,10 @@ app.get('/cancellation-form', async (req, res) => { // Renders cancellation form
 
 app.get('/update-form/:id', updateFormHandler);
 
-app.get('/appointment-list', verifyFirebaseToken, async (req, res) => { // 
-  // must verify user before accessing 
-  res.render('pages/appointmentList.ejs')
-});
+// app.get('/appointment-list', verifyFirebaseToken, async (req, res) => { // 
+//   // must verify user before accessing 
+//   res.render('pages/appointmentList.ejs')
+// });
 
 app.get('/signup-page', (req, res) => { // Render sign up form
   res.render('pages/signUpPage.ejs')
@@ -86,6 +86,7 @@ app.get('/logout', (req, res) => { // Logout function route
   req.session.destroy();
   res.cookie('currentUser', 'null', { httpOnly: false });
   res.cookie('userId', 'null', { httpOnly: true });
+  res.cookie('userType', 'null', { httpOnly: false });
   res.clearCookie('connect.sid');
 
 

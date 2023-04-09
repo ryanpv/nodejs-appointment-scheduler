@@ -39,7 +39,7 @@ app.get('/', checkUser, (req, res) => { // Renders homepage
   const date = new Date(2000, 2, 22, 4, 30).toString()
   const dateParse = Date.parse('2000-03-22T09:30:00.000Z')
 // console.log('session: ', req.session);
-console.log('cookies: ', req.cookies);
+console.log('cookies: ', req.cookies.userType);
 console.log('homepage - session ID: ', req.sessionID);
 console.log('homepage cookies user: ', req.cookies.currentUser);
 // console.log('verified user: ', req.user);
@@ -49,6 +49,10 @@ console.log('homepage cookies user: ', req.cookies.currentUser);
 //   console.log('user verification error');
 // }
   res.render('pages/homePage.ejs')
+});
+
+app.get('/appointment-unauthorized', (req, res) => {
+  res.send(`<p>UNAUTHORIZED! Please <a href='/login-page'>LOG IN</a> to see appointments or go <a href='/'>BACK TO HOMEPAGE</a> instead.</p>`)
 });
 
 app.get('/booking-form', async (req, res) => { // Renders booking form
@@ -87,7 +91,8 @@ app.get('/logout', (req, res) => { // Logout function route
   res.cookie('currentUser', 'null', { httpOnly: false });
   res.cookie('userId', 'null', { httpOnly: true });
   res.cookie('userType', 'null', { httpOnly: false });
-  res.clearCookie('connect.sid');
+  res.cookie('connect.sid', 'null');
+  res.clearCookie('refreshToken');
 
 
   res.send(`<p>LOGGED OUT!</p><a href='/'>back to home</a>`);

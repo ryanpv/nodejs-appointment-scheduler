@@ -23,13 +23,14 @@ export const loginHandler = async (req, res) => {
 
     res.cookie('currentUser', userEmail, { httpOnly: false, encode: String });
     res.cookie('userId', userUid, { httpOnly: true });
+    res.cookie('refreshToken', refresh_token, { httpOnly: true });
 
     if (req.session.authenticated) {
       console.log('user logged: ', userEmail);
       console.log('session ', req.sessionID);
       res.redirect('/');
     } else {
-      res.send(`<p>SUCCESS</p> <a href='/login-page'>back to login</a>`);
+      res.send(`<p>failed login</p> <a href='/login-page'>back to login</a>`);
     };
 
 // console.log('logged token: ', access_token);

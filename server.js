@@ -79,11 +79,12 @@ app.get('/signup-page', (req, res) => { // Render sign up form
 
 app.get('/login-page', (req, res) => { // Render log in page
   if (req.session.authenticated) {
-    console.log('user logged in');
+    console.log('user logged in.');
+    res.send(`<p>User already logged in. to change accounts, please logout first.</p><a href='/'>back to home</a>`)
   } else {
     console.log('no user');
+    res.render('pages/loginPage.ejs')
   }
-  res.render('pages/loginPage.ejs')
 });
 
 app.get('/logout', (req, res) => { // Logout function route

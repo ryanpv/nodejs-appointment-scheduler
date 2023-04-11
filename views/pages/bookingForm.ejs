@@ -13,7 +13,15 @@
   <form action="/add-appointment" method="POST">
     <div class="form-group">
       <label for="formControlEmailInput">Email address</label>
-      <input required name="client" type="email" class="form-control" id="formControlEmailInput" placeholder="name@example.com">
+      <input required name="clientEmail" type="email" class="form-control" id="formControlEmailInput" placeholder="name@example.com">
+    </div>
+    <div class="form-group">
+      <label for="clientNameInput">Name</label>
+      <input required name="clientName" type="text" class="form-control" id="clientNameInput" placeholder="Your Name">
+    </div>
+    <div class="form-group">
+      <label for="phoneInput">Phone Number</label>
+      <input required name="clientPhone" type="tel" class="form-control" id="phoneInput"  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="format: XXX-XXX-XXXX">
     </div>
     <div class="form-group">
       <label for="dateInput">Date</label>

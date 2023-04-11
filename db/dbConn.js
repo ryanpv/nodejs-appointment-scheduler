@@ -16,10 +16,18 @@ db.once("open", function () {
 })
 
 export const appointmentSchema = new mongoose.Schema({
-  client: {
+  clientEmail: {
     type: String,
     required: true
   }, 
+  clientName: {
+    type: String,
+    required: true
+  }, 
+  clientPhone: {
+    type: String,
+    required: true
+  },
   date: {
     type: Object,
     required: true

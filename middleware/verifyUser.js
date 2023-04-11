@@ -34,6 +34,7 @@ export const verifyFirebaseToken = async (req, res, next) => { // middleware to 
     };
   } catch (err) {
     console.log(err);
+    res.send(err.message)
   };
 };
 

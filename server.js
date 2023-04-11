@@ -14,6 +14,7 @@ import { loginHandler } from './controllers/loginHandler.js';
 import { updateFormHandler } from './controllers/updateFormHandler.js';
 import { clientAppointments } from './controllers/clientAppointments.js';
 import { checkUser, verifyFirebaseToken } from './middleware/verifyUser.js';
+import { readExcelFile } from './controllers/admin/readExcel.js';
 
 
 const PORT = 3000;
@@ -41,6 +42,7 @@ app.get('/', checkUser, (req, res) => { // Renders homepage
 // console.log('session: ', req.session);
 console.log('cookies: ', req.cookies.userType);
 console.log('homepage - session ID: ', req.sessionID);
+readExcelFile();
 // console.log('homepage cookies user: ', req.cookies.currentUser);
 // console.log('verified user: ', req.user);
 // if (req.session.authenticated && req.session.userId === req.user.userId) {

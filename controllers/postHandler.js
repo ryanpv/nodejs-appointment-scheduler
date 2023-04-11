@@ -5,7 +5,7 @@ import { emailResponse } from './emailHandler.js';
 export const addAppointment = async (req, res) => { // POST new appointment
   try {
     const appt = new Appointment(req.body)
-    const checkDuplicate = await Appointment.exists({ client: req.body.client, date: req.body.date, service: req.body.service })
+    const checkDuplicate = await Appointment.exists({ client: req.body.clientEmail, date: req.body.date, service: req.body.service })
     console.log('duplicates: ', checkDuplicate);
     const emailType = 'booking'
 

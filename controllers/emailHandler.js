@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 export const emailResponse = async (req, res, emailType) => {
   try {
-    console.log('EMAIL: ', req.body.client);
+    console.log('EMAIL: ', req.body.clientEmail);
     let transporter = nodemailer.createTransport({
       host: "smtp.ethereal.email",
       port: 587,
@@ -14,7 +14,7 @@ export const emailResponse = async (req, res, emailType) => {
     
     const msg = {
       from: "test guy",
-      to: req.body.client,
+      to: req.body.clientEmail,
       // to: req.body.client ? req.body.client : emailRecipient,
       subject: `Appointment ${ emailType.toUpperCase() } confirmed!`,
       text: `Appointment ${ emailType.toUpperCase() } for ${ req.body.time } on ${ req.body.date }`,

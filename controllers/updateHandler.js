@@ -4,7 +4,9 @@ import { ObjectId } from 'mongodb'
 
 export const updateHandler = async (req, res) => { // UPDATE appointment time
   const updatedValues = {
-      client: req.body.client,
+      clientEmail: req.body.clientEmail,
+      clientName: req.body.clientName,
+      clientPhone: req.body.clientPhone,
       date: req.body.date,
       time: req.body.time,
       service: req.body.service,

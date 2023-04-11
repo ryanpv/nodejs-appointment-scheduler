@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <%- include('../partials/head.ejs') %>
+
 </head>
 <body class="container">
   <header>
@@ -10,17 +11,28 @@
 
   <form action="/get-daily-appointments" method="GET">
     <div class="form-group">
-      <label for="dateInput">Date</label>
+      <label for="dateInput">Date Filter</label>
       <input required name="date" type="date" class="form-control mb-2" id="dateInput">
       <button class="btn btn-secondary btn-sm" type="submit">Submit</button>
     </div>
   </form>
 
   <h1>All appointments</h1>
+
+  <div class="admin authorized" style="display: none;">
+      <form action="/admin/download-excel" method="GET">
+        <label for="dateInput">Select date to export to excel</label>
+        <input required name="date" type="date" class="form-control mb-2" id="dateInput">
+        <!-- <a class="nav-link btn btn-success" role="button" type="submit" href="">DOWNLOAD EXCEL</a> -->
+        <button class="btn btn-success" type="submit">EXPORT TO EXCEL</button>
+      </form>
+  </div>
+
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Client</th>
+        <th>Phone#</th>
         <th>Service</th>
         <th>Schedule</th>
         <th>Details</th>
@@ -33,4 +45,19 @@
     </tbody>
   </table>
 </body>
+<script>
+  console.log('split cookie', document.cookie.split("; "));
+  const adminShowExcelBtn = (selector) => {
+  const query = document.querySelectorAll(selector);
+    for (let i = 0; i < query.length; i++) {
+      query[i].style.display = 'block';
+    };
+  };
+
+  if (document.cookie.split("; ").includes("userType=admin")) {
+    console.log('admin detected');
+    adminShowExcelBtn('.admin.authorized');
+  };
+</script>
+
 </html>

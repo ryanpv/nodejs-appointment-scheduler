@@ -55,3 +55,21 @@ export const checkUser = async (req, res, next) => {
     console.log(err);
   };
 };
+
+export const checkIfAdmin = async (req, res, next) => {
+  try {
+    const userInfo = await getAuth().getUser(req.session.userId);
+
+    if (req.session.authenticated && userInfo.customClaims.admin) {
+      // console.log('session auth?: ', req.session.authenticated);
+      // console.log('admin claims?: ', userInfo.customClaims.admin);
+      return next();
+    } else {
+      res.send(`<p>403 - user is NOT admin.</p><a href='/login-page'>back to LOGIN</a>`)
+    };
+
+  } catch (err) {
+    console.log(err);
+    res.send(`<p>400 - check admin error.</p><a href='/login-page'>back to LOGIN</a>`)
+  };
+};

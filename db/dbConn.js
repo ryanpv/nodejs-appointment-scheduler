@@ -46,5 +46,7 @@ export const appointmentSchema = new mongoose.Schema({
   }
 });
 
+appointmentSchema.index({ '$**': 'text' }) // wildcard for all string fields
+
 export const Appointment = mongoose.model("Booking", appointmentSchema);
 

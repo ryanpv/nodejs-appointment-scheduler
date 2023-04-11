@@ -3,6 +3,7 @@ import { verifyFirebaseToken } from "../middleware/verifyUser.js";
 import { adminGetAll } from "../controllers/admin/getAllHandler.js";
 import { getDailyAppointments } from "../controllers/admin/getDailyHandler.js";
 import { excelDownloader } from "../controllers/admin/downloadExcel.js";
+import { searchAppointments } from "../controllers/admin/appointmentSearch.js";
 
 const router = express.Router();
 
@@ -14,5 +15,8 @@ router.route('/get-daily-appointments')
 
 router.route('/download-excel')
   .get(verifyFirebaseToken, excelDownloader);
+
+router.route('/admin-search')
+  .get(searchAppointments);
 
 export default router;

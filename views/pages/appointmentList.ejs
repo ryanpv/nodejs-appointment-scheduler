@@ -28,6 +28,14 @@
       </form>
   </div>
 
+  <div class="admin authorized" style="display: none;">
+    <form action="/admin/admin-search" method="GET">
+      <label for="searchInput">Search for appointments</label>
+      <input required name="searchInput" type="text" class="form-control mb-2" id="searchInput">
+      <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+</div>
+
   <table class="table table-striped">
     <thead>
       <tr>

@@ -14,12 +14,12 @@ import { loginHandler } from './controllers/loginHandler.js';
 import { updateFormHandler } from './controllers/updateFormHandler.js';
 import { clientAppointments } from './controllers/clientAppointments.js';
 import { checkUser, verifyFirebaseToken } from './middleware/verifyUser.js';
-import { readExcelFile } from './controllers/admin/readExcel.js';
+import adminRouter from "./routers/adminRoutes.js"; 
 
 
 const PORT = 3000;
 const app = express();
-const store = new session.MemoryStore();
+const store = new session.MemoryStore(); // use connect-mongo for PROD instead
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,25 +31,13 @@ app.use(session({
   resave: false,
   store: store
 }));
+app.use("/admin", adminRouter); // Routes for admin functions
 
 app.set('view engine', 'ejs');
 
 /////////// RENDER ROUTES /////////// 
 
 app.get('/', checkUser, (req, res) => { // Renders homepage
-  const date = new Date(2000, 2, 22, 4, 30).toString()
-  const dateParse = Date.parse('2000-03-22T09:30:00.000Z')
-// console.log('session: ', req.session);
-console.log('cookies: ', req.cookies.userType);
-console.log('homepage - session ID: ', req.sessionID);
-readExcelFile();
-// console.log('homepage cookies user: ', req.cookies.currentUser);
-// console.log('verified user: ', req.user);
-// if (req.session.authenticated && req.session.userId === req.user.userId) {
-//   console.log('user fully verified');
-// } else {
-//   console.log('user verification error');
-// }
   res.render('pages/homePage.ejs')
 });
 
@@ -58,9 +46,6 @@ app.get('/appointment-unauthorized', (req, res) => {
 });
 
 app.get('/booking-form', async (req, res) => { // Renders booking form
-  // if no user render page to sign up/login, else render booking form ???
-  console.log('booking page');
-  console.log('booking form user: ', req.user);
   res.render('pages/bookingForm.ejs')
 });
 
@@ -68,12 +53,7 @@ app.get('/cancellation-form', async (req, res) => { // Renders cancellation form
   res.render('pages/cancelForm.ejs')
 });
 
-app.get('/update-form/:id', updateFormHandler);
-
-// app.get('/appointment-list', verifyFirebaseToken, async (req, res) => { // 
-//   // must verify user before accessing 
-//   res.render('pages/appointmentList.ejs')
-// });
+app.get('/update-form/:id', updateFormHandler); // Renders update form with item's data filled in
 
 app.get('/signup-page', (req, res) => { // Render sign up form
   res.render('pages/signUpPage.ejs')
@@ -97,7 +77,6 @@ app.get('/logout', (req, res) => { // Logout function route
   res.cookie('connect.sid', 'null');
   res.clearCookie('refreshToken');
 
-
   res.send(`<p>LOGGED OUT!</p><a href='/'>back to home</a>`);
 })
 
@@ -112,18 +91,7 @@ app.post('/sign-up-success', (req, res) => {
 
 /////////////////// MONGODB ROUTES//////////////////
 
-// needs middleware to check if client session exists************
 app.get("/user-appointments", verifyFirebaseToken, clientAppointments);
-
-app.get("/appointment/:id", async (req, res) => { // GET specific appointment using _id
-  const appointment = await Appointment.findById(req.params.id)
-
-  try {
-    res.send(appointment)
-  } catch (err) {
-    console.log(err);
-  }
-});
 
 app.post("/add-appointment", addAppointment) // POST new appointment
 
@@ -132,23 +100,6 @@ app.post("/update-appointment/:id", verifyFirebaseToken, updateHandler); // UPDA
 app.post("/cancel-appointment", verifyFirebaseToken, clientCancel); // DELETE appointment through FORM
 
 app.post("/cancel-request", verifyFirebaseToken, adminCancel); // DELETE appointment 
-////////////////////// ADMIN ROUTES ////////////////////
-// all admin routes need middleware to confirm that admin is accessing
-
-import adminRouter from "./routers/adminRoutes.js";
-app.use("/admin", adminRouter);
-
-// app.get("/admin-get-appointments", verifyFirebaseToken, adminGetAll); // GET ALL appointments - ADMIN ROUTE
-
-// app.get("/get-daily-appointments", verifyFirebaseToken, getDailyAppointments) // Filter appointments for each day
-
-
-
-
-//////////////////
-
-
-
 
 
 

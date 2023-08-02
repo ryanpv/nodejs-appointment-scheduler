@@ -22,7 +22,9 @@ This app was developed to serve as backend for services that use appointment sch
 ## Potential future ideas/features
 * Complete full stack application
 
-### Homepage Screenshot
+##
+
+### Homepage
 ![Homepage](https://github.com/ryanpv/nodejs-appointment-scheduler/blob/main/public/nodejs-appointment-scheduler-home.jpg)
 
 ### Booking Form

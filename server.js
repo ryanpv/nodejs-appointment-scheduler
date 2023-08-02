@@ -17,7 +17,7 @@ import { checkUser, verifyFirebaseToken } from './middleware/verifyUser.js';
 import adminRouter from "./routers/adminRoutes.js"; 
 
 
-const PORT = 3000;
+const PORT = 3001;
 const app = express();
 const store = new session.MemoryStore(); // use connect-mongo for PROD instead
 

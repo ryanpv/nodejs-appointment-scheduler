@@ -48,7 +48,6 @@ export const checkUser = async (req, res, next) => {
         : res.cookie('userType', 'not acquired yet', { httpOnly: false });
       next()
     } else {
-      console.log('no user logged in to check');
       next();
     };
   } catch (err) {

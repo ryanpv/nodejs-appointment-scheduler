@@ -8,6 +8,7 @@ This app was developed to serve as backend for services that use appointment sch
 * Change/cancel user booked appointments
 * Send automatic email upon appointment bookings/cancellations/changes
 * View list of appointments
+* Query database for specific appointment
 * Export data to excel sheet
 
 ## Technologies
